@@ -37,7 +37,7 @@ func (c *client) GetInfo() (*models.Info, error) {
 
 func (c *client) AuthDevice(req *models.DeviceAuthRequest) (*models.DeviceAuthResponse, error) {
 	var res *models.DeviceAuthResponse
-	_, _, errs := c.http.Post(buildURL(c, "/api/devices/auth")).Send(req).EndStruct(&res)
+	_, _, errs := c.http.Post(buildURL(c, "http://127.0.0.1:3333/api/devices/auth")).Send(req).EndStruct(&res)
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}
