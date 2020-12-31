@@ -4,6 +4,7 @@ package client
 
 import (
 	"github.com/shellhub-io/shellhub/pkg/models"
+	"fmt"
 )
 
 const (
@@ -24,7 +25,9 @@ type publicAPI interface {
 
 func (c *client) GetInfo() (*models.Info, error) {
 	var info *models.Info
-	_, _, errs := c.http.Get(buildURL(c, "/info")).EndStruct(&info)
+	fmt.Println(buildURL(c, "/info"))
+	_, _, errs := c.http.Get("http://127.0.0.1:3333/info").EndStruct(&info)
+
 	if len(errs) > 0 {
 		return nil, errs[0]
 	}

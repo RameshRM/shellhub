@@ -123,7 +123,10 @@ func main() {
 
 	router := mux.NewRouter()
 	router.HandleFunc("/ssh/{id}", func(w http.ResponseWriter, r *http.Request) {
+
 		vars := mux.Vars(r)
+		logrus.Debug("Incomming ssh")
+		logrus.Debug(vars)
 		conn := r.Context().Value("http-conn").(net.Conn)
 		server.Sessions[vars["id"]] = conn
 		server.HandleConn(conn)
@@ -144,7 +147,10 @@ func main() {
 
 	go func() {
 		for {
+			fmt.Println(info.Endpoints)
 			listener, err := NewListener(info.Endpoints.API, serverURL.Scheme, auth.Token)
+			fmt.Println(err)
+			fmt.Println(listener)
 			if err != nil {
 				time.Sleep(time.Second * 10)
 				continue
@@ -216,6 +222,8 @@ func NewListener(host, protocol, token string) (*revdial.Listener, error) {
 
 	protocol = strings.Replace(protocol, "http", "ws", 1)
 	wsConn, _, err := websocket.DefaultDialer.Dial(fmt.Sprintf("%s://%s/ssh/connection", protocol, host), req.Header)
+	fmt.Println("Connection")
+	fmt.Println("%s://%s/ssh/connection", protocol, host)
 	if err != nil {
 		return nil, err
 	}

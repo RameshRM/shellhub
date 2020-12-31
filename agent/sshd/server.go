@@ -74,6 +74,7 @@ func (s *Server) ListenAndServe() error {
 }
 
 func (s *Server) HandleConn(conn net.Conn) {
+	fmt.Println("Incominng connection")
 	s.sshd.HandleConn(conn)
 }
 

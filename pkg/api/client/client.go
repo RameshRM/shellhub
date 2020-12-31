@@ -102,6 +102,7 @@ func (c *client) GetDevice(uid string) (*models.Device, error) {
 
 func buildURL(c *client, uri string) string {
 	u, _ := url.Parse(fmt.Sprintf("%s://%s:%d", c.scheme, c.host, c.port))
+	fmt.println(u);
 	u.Path = path.Join(u.Path, uri)
 	return u.String()
 }
